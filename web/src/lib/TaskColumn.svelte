@@ -31,10 +31,10 @@
 
 <style>
   .column {
+    text-align: center;
     display: flex;
     flex-direction: column;
     width: 20%;
     height: 100%;
-    border: 1px black solid;
   }
 </style>

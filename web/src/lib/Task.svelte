@@ -15,20 +15,35 @@
   }}
 >
   <p>{title}</p>
-  <div>{estimate}</div>
 
-  {#if ["In Progress", "In Review"].includes(status)}
-    <button on:click={onPlayPause}>Pause</button>
-  {:else if ["Todo", "To Review"].includes(status)}
-    <button on:click={onPlayPause}>Play</button>
-  {/if}
+  <div class="bottom-bar">
+    {#if ["In Progress", "In Review"].includes(status)}
+      <button class="icon-button" on:click={onPlayPause}>
+        <span class="material-symbols-outlined">pause</span>
+      </button>
+    {:else if ["Todo", "To Review"].includes(status)}
+      <button class="icon-button" on:click={onPlayPause}>
+        <span class="material-symbols-outlined">play_arrow</span>
+      </button>
+    {/if}
+    <span>{estimate}d</span>
+  </div>
 </div>
 
 <style>
   .container {
+    background-color: #201e1e;
     border-radius: 20px;
     border: 1px black solid;
-    width: fit-content;
+    width: 100%;
     padding: 12px 24px;
+    box-sizing: border-box;
+  }
+
+  .bottom-bar {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
   }
 </style>
