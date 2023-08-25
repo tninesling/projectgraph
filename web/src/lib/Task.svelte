@@ -1,7 +1,10 @@
 <script lang="ts">
+  import Duration from "./Duration.svelte";
+
   export let title: string;
   export let estimate: number;
   export let status: string;
+  export let secondsSpent: number;
   export let onPlayPause: () => void;
 </script>
 
@@ -26,6 +29,8 @@
         <span class="material-symbols-outlined">play_arrow</span>
       </button>
     {/if}
+    <Duration durationSeconds={secondsSpent} />
+    <span class="slash">/</span>
     <span>{estimate}d</span>
   </div>
 </div>
@@ -45,5 +50,9 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-evenly;
+  }
+
+  .slash {
+    color: #02eebb;
   }
 </style>

@@ -24,6 +24,7 @@
       title={task.title}
       estimate={task.estimate}
       status={task.status}
+      secondsSpent={task.secondsSpent}
       onPlayPause={() => onPlayPauseTask(task.title)}
     />
   {/each}

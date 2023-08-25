@@ -1,19 +1,31 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import TaskColumn from "$lib/TaskColumn.svelte";
 
   let tasks = [
-    { title: "Task 1", estimate: 5, status: "Todo" },
-    { title: "Task 2", estimate: 2, status: "Todo" },
-    { title: "Task 3", estimate: 3, status: "In Progress" },
-    { title: "Task 4", estimate: 2, status: "To Review" },
-    { title: "Task 5", estimate: 1, status: "In Review" },
-    { title: "Task 6", estimate: 3, status: "Done" },
-    { title: "Task 7", estimate: 1, status: "Done" },
+    { title: "Task 1", estimate: 5, status: "Todo", secondsSpent: 0 },
+    { title: "Task 2", estimate: 2, status: "Todo", secondsSpent: 120 },
+    { title: "Task 3", estimate: 3, status: "In Progress", secondsSpent: 7284 },
+    { title: "Task 4", estimate: 2, status: "To Review", secondsSpent: 1820 },
+    { title: "Task 5", estimate: 1, status: "In Review", secondsSpent: 2456 },
+    { title: "Task 6", estimate: 3, status: "Done", secondsSpent: 10235 },
+    { title: "Task 7", estimate: 1, status: "Done", secondsSpent: 8320 },
   ];
 
   function sendTo(id: string, status: string): void {
     tasks = tasks.map((t) => (t.title === id ? { ...t, status } : t));
   }
+
+  onMount(() => {
+    const interval = setInterval(() => {
+      tasks = tasks.map((t) =>
+        !["In Progress", "In Review"].includes(t.status)
+          ? t
+          : { ...t, secondsSpent: t.secondsSpent + 1 }
+      );
+    }, 1000);
+    return () => clearInterval(interval);
+  });
 </script>
 
 <h1>Kanban Board</h1>
