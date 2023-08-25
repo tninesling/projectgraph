@@ -1,26 +1,26 @@
 <script lang="ts">
   export let title: string;
   export let estimate: number;
-
-  let isPlaying = false;
+  export let status: string;
+  export let onPlayPause: () => void;
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   id={title}
   class="container"
   draggable="true"
   on:dragstart={(e) => {
     e.dataTransfer?.setData("text", title);
-    e.dataTransfer.dropEffect = "move";
   }}
 >
   <p>{title}</p>
   <div>{estimate}</div>
 
-  {#if isPlaying}
-    <button on:click={() => (isPlaying = false)}>Pause</button>
-  {:else}
-    <button on:click={() => (isPlaying = true)}>Play</button>
+  {#if ["In Progress", "In Review"].includes(status)}
+    <button on:click={onPlayPause}>Pause</button>
+  {:else if ["Todo", "To Review"].includes(status)}
+    <button on:click={onPlayPause}>Play</button>
   {/if}
 </div>
 
