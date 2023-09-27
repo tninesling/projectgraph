@@ -21,13 +21,7 @@
 >
   <h2>{status}</h2>
   {#each tasks as task}
-    <TaskCard
-      id={task.id}
-      estimate={task.estimate}
-      status={task.status}
-      secondsSpent={task.secondsSpent}
-      onPlayPause={() => onPlayPauseTask(task.id)}
-    />
+    <TaskCard {task} onPlayPause={() => onPlayPauseTask(task.id)} />
   {/each}
 </section>
 

@@ -1,24 +1,28 @@
 <script lang="ts">
-  export let id: string;
-  export let dependsOn: any;
+  import type { Task } from "$lib";
+  import TaskCard from "./TaskCard.svelte";
+
+  export let task: Task;
 </script>
 
 <div class="subtree">
-  <div class="node">{id}</div>
+  <div class="node">
+    <TaskCard {task} />
+  </div>
   <svg width="100%">
-    {#each dependsOn as _, i}
+    {#each task.dependsOn as _, i}
       <line
         x1="50%"
         y1="0"
-        x2="{(100 * i + 50) / dependsOn.length}%"
+        x2="{(100 * i + 50) / task.dependsOn.length}%"
         y2="100%"
         stroke="#02eebb"
       />
     {/each}
   </svg>
   <div class="dependencies">
-    {#each dependsOn as dependentTask}
-      <svelte:self {...dependentTask} />
+    {#each task.dependsOn as dependentTask}
+      <svelte:self task={dependentTask} />
     {/each}
   </div>
 </div>
@@ -32,9 +36,7 @@
   }
 
   .node {
-    padding: 12px;
-    border: 1px solid #02eebb;
-    border-radius: 10px;
+    width: 240px;
   }
 
   .dependencies {

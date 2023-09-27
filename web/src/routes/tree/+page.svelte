@@ -4,5 +4,5 @@
 </script>
 
 <div>
-  <TaskTree {...$taskTree} />
+  <TaskTree task={$taskTree} />
 </div>

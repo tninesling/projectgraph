@@ -1,37 +1,35 @@
 <script lang="ts">
+  import type { Task } from "$lib";
   import Duration from "./Duration.svelte";
 
-  export let id: string;
-  export let estimate: number;
-  export let status: string;
-  export let secondsSpent: number;
-  export let onPlayPause: () => void;
+  export let task: Task;
+  export let onPlayPause: (() => void) | undefined = undefined;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  {id}
+  id={task.id}
   class="container"
   draggable="true"
   on:dragstart={(e) => {
-    e.dataTransfer?.setData("text", id);
+    e.dataTransfer?.setData("text", task.id);
   }}
 >
-  <p>{id}</p>
+  <p>{task.id}</p>
 
   <div class="bottom-bar">
-    {#if ["In Progress", "In Review"].includes(status)}
+    {#if !!onPlayPause && ["In Progress", "In Review"].includes(task.status)}
       <button class="icon-button" on:click={onPlayPause}>
         <span class="material-symbols-outlined">pause</span>
       </button>
-    {:else if ["Todo", "To Review"].includes(status)}
+    {:else if !!onPlayPause && ["Todo", "To Review"].includes(task.status)}
       <button class="icon-button" on:click={onPlayPause}>
         <span class="material-symbols-outlined">play_arrow</span>
       </button>
     {/if}
-    <Duration durationSeconds={secondsSpent} />
+    <Duration durationSeconds={task.secondsSpent} />
     <span class="slash">/</span>
-    <span>{estimate}d</span>
+    <span>{task.estimate}d</span>
   </div>
 </div>
 
@@ -43,6 +41,7 @@
     width: 100%;
     padding: 12px 24px;
     box-sizing: border-box;
+    text-align: center;
   }
 
   .bottom-bar {
