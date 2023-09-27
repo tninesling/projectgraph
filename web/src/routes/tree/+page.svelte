@@ -1,43 +1,8 @@
 <script lang="ts">
-  import TaskTree from "$lib/TaskTree.svelte";
-
-  const tasks = [
-    {
-      id: "Task 7",
-      dependsOn: [
-        {
-          id: "Task 6",
-          dependsOn: [
-            {
-              id: "Task 4",
-              dependsOn: [],
-            },
-            {
-              id: "Task 5",
-              dependsOn: [],
-            },
-          ],
-        },
-        {
-          id: "Task 3",
-          dependsOn: [],
-        },
-      ],
-    },
-    {
-      id: "Task 2",
-      dependsOn: [
-        {
-          id: "Task 1",
-          dependsOn: [],
-        },
-      ],
-    },
-  ];
+  import TaskTree from "$lib/components/TaskTree.svelte";
+  import { taskTree } from "$lib/stores/tasks";
 </script>
 
 <div>
-  {#each tasks as task}
-    <TaskTree {...task} />
-  {/each}
+  <TaskTree {...$taskTree} />
 </div>

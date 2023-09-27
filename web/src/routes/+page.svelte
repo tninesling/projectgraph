@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Elipsis from "$lib/Elipsis.svelte";
+  import Elipsis from "$lib/components/Elipsis.svelte";
 </script>
 
 <div>

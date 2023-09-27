@@ -1,8 +1,9 @@
 <script lang="ts">
-  import Task from "./Task.svelte";
+  import type { Task } from "$lib";
+  import TaskCard from "./TaskCard.svelte";
 
   export let status: string;
-  export let tasks: any[];
+  export let tasks: Task[];
   export let onDropTask: (taskId: string) => void;
   export let onPlayPauseTask: (taskId: string) => void;
 </script>
@@ -20,12 +21,12 @@
 >
   <h2>{status}</h2>
   {#each tasks as task}
-    <Task
-      title={task.title}
+    <TaskCard
+      id={task.id}
       estimate={task.estimate}
       status={task.status}
       secondsSpent={task.secondsSpent}
-      onPlayPause={() => onPlayPauseTask(task.title)}
+      onPlayPause={() => onPlayPauseTask(task.id)}
     />
   {/each}
 </section>

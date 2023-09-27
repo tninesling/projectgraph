@@ -1,7 +1,7 @@
 <script lang="ts">
   import Duration from "./Duration.svelte";
 
-  export let title: string;
+  export let id: string;
   export let estimate: number;
   export let status: string;
   export let secondsSpent: number;
@@ -10,14 +10,14 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  id={title}
+  {id}
   class="container"
   draggable="true"
   on:dragstart={(e) => {
-    e.dataTransfer?.setData("text", title);
+    e.dataTransfer?.setData("text", id);
   }}
 >
-  <p>{title}</p>
+  <p>{id}</p>
 
   <div class="bottom-bar">
     {#if ["In Progress", "In Review"].includes(status)}
