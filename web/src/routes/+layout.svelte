@@ -1,7 +1,7 @@
 <nav>
   <a href="/">home</a>
-  <a href="/kanban">kanban</a>
-  <a href="/tree">tree</a>
+  <a href="/tasks/kanban">kanban</a>
+  <a href="/tasks/tree">tree</a>
 </nav>
 
 <slot />
