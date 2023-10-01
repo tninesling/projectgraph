@@ -1,21 +1,30 @@
 <script lang="ts">
-  import { taskTree } from "$lib/stores/tasks";
+  import { taskIndex } from "$lib/stores/taskIndex";
+  import { taskTree } from "$lib/stores/taskTree";
   import type { Task } from "$lib";
   import Duration from "./Duration.svelte";
 
   export let task: Task;
+
+  $: isSearchResult = $taskIndex.searchResults.includes(task.id);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   id={task.id}
-  class="container"
+  class={isSearchResult ? "highlighted container" : "container"}
   draggable="true"
   on:dragstart={(e) => {
     e.dataTransfer?.setData("text", task.id);
   }}
 >
-  <p>{task.id}</p>
+  <p>
+    {#if isSearchResult}
+      <em>{task.id}</em>
+    {:else}
+      {task.id}
+    {/if}
+  </p>
 
   <div class="bottom-bar">
     <button
@@ -44,6 +53,10 @@
     padding: 12px 24px;
     box-sizing: border-box;
     text-align: center;
+  }
+
+  .highlighted {
+    background-color: #3b3737;
   }
 
   .bottom-bar {

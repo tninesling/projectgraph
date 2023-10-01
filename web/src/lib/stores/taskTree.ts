@@ -60,8 +60,8 @@ export const taskTree = {
           : { ...t, secondsSpent: t.secondsSpent + 1 }
       )
   ),
-  moveTask: (taskId: string, newStatus: Status) => update((task) => 
-    map(task, (t) => t.id !== taskId ? t : Object.assign(t, { status: newStatus }))
+  moveTask: (taskId: string, newStatus: Status) => update((tree) => 
+    map(tree, (t) => t.id !== taskId ? t : Object.assign(t, { status: newStatus }))
   ),
   toggleInProgress: (taskId: string) => update((tree) =>
     map(tree, (t) => t.id !== taskId ? t : Object.assign(t, { status: progressToggleTargets[t.status] }))

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { taskTree } from "$lib/stores/tasks";
+  import { taskTree } from "$lib/stores/taskTree";
   import { Status, unwrapTree } from "$lib";
   import TaskCard from "./TaskCard.svelte";
 
