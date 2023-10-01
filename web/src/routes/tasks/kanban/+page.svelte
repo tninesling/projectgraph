@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { onMount } from "svelte";
   import TaskColumn from "$lib/components/TaskColumn.svelte";
   import { taskTree } from "$lib/stores/tasks";
   import { map, unwrapTree } from "$lib";
@@ -11,19 +10,6 @@
       map(tree, (t) => (t.id === id ? { ...t, status } : t))
     );
   }
-
-  onMount(() => {
-    const interval = setInterval(() => {
-      taskTree.update((tree) =>
-        map(tree, (t) =>
-          !["In Progress", "In Review"].includes(t.status)
-            ? t
-            : { ...t, secondsSpent: t.secondsSpent + 1 }
-        )
-      );
-    }, 1000);
-    return () => clearInterval(interval);
-  });
 </script>
 
 <h1>Kanban Board</h1>
