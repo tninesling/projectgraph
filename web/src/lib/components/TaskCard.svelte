@@ -28,6 +28,7 @@
   style="opacity: {getOpacity()}"
 >
   <p>{task.id}</p>
+  <p>{task.description}</p>
 
   <div class="bottom-bar">
     <button

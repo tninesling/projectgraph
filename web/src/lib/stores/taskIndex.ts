@@ -8,7 +8,7 @@ export const taskQuery = writable("");
 
 const fuseOptions = {
   includeScore: true,
-  keys: ["id"]
+  keys: ["id", "description"]
 }
 const fuse = derived(taskTree, ($tasks) => new Fuse(unwrapTree($tasks), fuseOptions))
 

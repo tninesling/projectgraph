@@ -8,6 +8,7 @@ export enum Status {
 
 export interface Task {
   id: string;
+  description: string;
   estimate: number;
   status: Status;
   secondsSpent: number;

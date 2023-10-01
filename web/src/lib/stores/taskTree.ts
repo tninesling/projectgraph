@@ -4,19 +4,23 @@ import { writable } from "svelte/store";
 export const { subscribe, update } = writable<Task>(
   {
     id: "Task 7",
+    description: "Bring the stuff from Task 6 home",
     estimate: 1, status: Status.Done, secondsSpent: 8320,
     dependsOn: [
       {
         id: "Task 6",
+        description: "Pick up groceries at the store",
         estimate: 3, status: Status.Done, secondsSpent: 10235,
         dependsOn: [
           {
             id: "Task 4",
+            description: "Put bags in the car",
             estimate: 2, status: Status.ToReview, secondsSpent: 1820,
             dependsOn: [],
           },
           {
             id: "Task 5",
+            description: "Create a grocery list",
             estimate: 1, status: Status.InReview, secondsSpent: 2456,
             dependsOn: [],
           },
@@ -24,14 +28,17 @@ export const { subscribe, update } = writable<Task>(
       },
       {
         id: "Task 3",
+        description: "Do another thing",
         estimate: 3, status: Status.InProgress, secondsSpent: 7284,
         dependsOn: [
           {
             id: "Task 2",
+            description: "Do something that depends on Task 1",
             estimate: 2, status: Status.Todo, secondsSpent: 120,
             dependsOn: [
               {
                 id: "Task 1",
+                description: "Do something",
                 estimate: 5, status: Status.Todo, secondsSpent: 0,
                 dependsOn: [],
               },
