@@ -1,9 +1,9 @@
 <script lang="ts">
   import { taskTree } from "$lib/stores/tasks";
-  import { unwrapTree } from "$lib";
+  import { Status, unwrapTree } from "$lib";
   import TaskCard from "./TaskCard.svelte";
 
-  export let status: string;
+  export let status: Status;
 
   $: tasks = unwrapTree($taskTree).filter((t) => t.status === status);
 </script>

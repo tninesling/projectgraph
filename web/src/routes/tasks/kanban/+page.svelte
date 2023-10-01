@@ -1,14 +1,15 @@
 <script lang="ts">
+  import { Status } from "$lib";
   import TaskColumn from "$lib/components/TaskColumn.svelte";
 </script>
 
 <h1>Kanban Board</h1>
 <div class="row">
-  <TaskColumn status="Todo" />
-  <TaskColumn status="In Progress" />
-  <TaskColumn status="To Review" />
-  <TaskColumn status="In Review" />
-  <TaskColumn status="Done" />
+  <TaskColumn status={Status.Todo} />
+  <TaskColumn status={Status.InProgress} />
+  <TaskColumn status={Status.ToReview} />
+  <TaskColumn status={Status.InReview} />
+  <TaskColumn status={Status.Done} />
 </div>
 
 <style>

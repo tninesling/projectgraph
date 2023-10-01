@@ -1,7 +1,15 @@
+export enum Status {
+  Todo = "Todo",
+  InProgress = "In Progress",
+  ToReview = "To Review",
+  InReview = "In Review",
+  Done = "Done",
+}
+
 export interface Task {
   id: string;
   estimate: number;
-  status: string;
+  status: Status;
   secondsSpent: number;
   dependsOn: Task[];
 }
