@@ -1,30 +1,33 @@
 <script lang="ts">
-  import { taskIndex } from "$lib/stores/taskIndex";
+  import { taskIndex, taskQuery } from "$lib/stores/taskIndex";
   import { taskTree } from "$lib/stores/taskTree";
   import type { Task } from "$lib";
   import Duration from "./Duration.svelte";
 
   export let task: Task;
 
-  $: isSearchResult = $taskIndex.searchResults.includes(task.id);
+  $: getOpacity = () => {
+    if ($taskQuery.length < 1) return 1;
+
+    // Score is between 0 and 1, where 0 is perfect match and 1 is no match
+    const score = $taskIndex.searchResults[task.id]?.score ?? 1;
+    if (score < 0.2) return 1;
+
+    return 1 - score * 0.5;
+  };
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   id={task.id}
-  class={isSearchResult ? "highlighted container" : "container"}
+  class="container"
   draggable="true"
   on:dragstart={(e) => {
     e.dataTransfer?.setData("text", task.id);
   }}
+  style="opacity: {getOpacity()}"
 >
-  <p>
-    {#if isSearchResult}
-      <em>{task.id}</em>
-    {:else}
-      {task.id}
-    {/if}
-  </p>
+  <p>{task.id}</p>
 
   <div class="bottom-bar">
     <button
@@ -53,10 +56,6 @@
     padding: 12px 24px;
     box-sizing: border-box;
     text-align: center;
-  }
-
-  .highlighted {
-    background-color: #3b3737;
   }
 
   .bottom-bar {
