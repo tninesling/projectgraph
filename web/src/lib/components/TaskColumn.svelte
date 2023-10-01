@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Task } from "$lib";
+  import { taskTree } from "$lib/stores/tasks";
+  import { unwrapTree } from "$lib";
   import TaskCard from "./TaskCard.svelte";
 
   export let status: string;
-  export let tasks: Task[];
-  export let onDropTask: (taskId: string) => void;
-  export let onPlayPauseTask: (taskId: string) => void;
+
+  $: tasks = unwrapTree($taskTree).filter((t) => t.status === status);
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -15,13 +15,13 @@
   on:drop={(e) => {
     const task = e.dataTransfer?.getData("text");
     if (task) {
-      onDropTask(task);
+      taskTree.moveTask(task, status);
     }
   }}
 >
   <h2>{status}</h2>
   {#each tasks as task}
-    <TaskCard {task} onPlayPause={() => onPlayPauseTask(task.id)} />
+    <TaskCard {task} />
   {/each}
 </section>
 

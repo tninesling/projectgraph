@@ -1,7 +1,7 @@
-import type { Task } from "$lib";
+import { map, type Task } from "$lib";
 import { writable } from "svelte/store";
 
-export const taskTree = writable<Task>(
+export const { subscribe, update } = writable<Task>(
   {
     id: "Task 7",
     estimate: 1, status: "Done", secondsSpent: 8320,
@@ -42,3 +42,28 @@ export const taskTree = writable<Task>(
     ],
   },
 );
+
+const progressToggleTargets: Record<string, string> = {
+  Todo: "In Progress",
+  "In Progress": "Todo",
+  "To Review": "In Review",
+  "In Review": "To Review",
+  "Done": "Done",
+}
+
+export const taskTree = {
+  subscribe,
+  incrementTimers: () => update((tree) =>
+      map(tree, (t) =>
+        !["In Progress", "In Review"].includes(t.status)
+          ? t
+          : { ...t, secondsSpent: t.secondsSpent + 1 }
+      )
+  ),
+  moveTask: (taskId: string, newStatus: string) => update((task) => 
+    map(task, (t) => t.id !== taskId ? t : Object.assign(t, { status: newStatus }))
+  ),
+  toggleInProgress: (taskId: string) => update((tree) =>
+    map(tree, (t) => t.id !== taskId ? t : Object.assign(t, { status: progressToggleTargets[t.status] }))
+  )
+}

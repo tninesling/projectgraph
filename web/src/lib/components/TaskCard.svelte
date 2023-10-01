@@ -1,9 +1,9 @@
 <script lang="ts">
+  import { taskTree } from "$lib/stores/tasks";
   import type { Task } from "$lib";
   import Duration from "./Duration.svelte";
 
   export let task: Task;
-  export let onPlayPause: (() => void) | undefined = undefined;
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -18,15 +18,17 @@
   <p>{task.id}</p>
 
   <div class="bottom-bar">
-    {#if !!onPlayPause && ["In Progress", "In Review"].includes(task.status)}
-      <button class="icon-button" on:click={onPlayPause}>
+    <button
+      class="icon-button"
+      disabled={task.status === "Done"}
+      on:click={() => taskTree.toggleInProgress(task.id)}
+    >
+      {#if ["In Progress", "In Review"].includes(task.status)}
         <span class="material-symbols-outlined">pause</span>
-      </button>
-    {:else if !!onPlayPause && ["Todo", "To Review"].includes(task.status)}
-      <button class="icon-button" on:click={onPlayPause}>
+      {:else if ["Done", "Todo", "To Review"].includes(task.status)}
         <span class="material-symbols-outlined">play_arrow</span>
-      </button>
-    {/if}
+      {/if}
+    </button>
     <Duration durationSeconds={task.secondsSpent} />
     <span class="slash">/</span>
     <span>{task.estimate}d</span>
